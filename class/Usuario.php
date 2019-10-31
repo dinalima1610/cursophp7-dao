@@ -1,46 +1,72 @@
 <?php
-	class Sql extends PDO {
-		private $conn;
+	class Usuario {
+		private $idusuario;
+		private $deslogin;
+		private $dessenha;
+		private $dtcadastro;
 
-		public function __construct() {
 
-			$this->conn = new PDO("mysql:dbname=dbphp7;host=localhost","root","root");
-
+		public function getIdusuario() {
+			return $this->idusuario;
 		}
 
-		private function setParams($statement, $parameters = array()) {
+		public function setIdusario($idusuario) {
+			$this->idusuario = $idusuario;
+		}
 
-			foreach ($parameters as $key => $value) {
 
-				$this->setParam($key, $value);
+		public function getDeslogin() {
+			return $this->deslogin;
+		}
 
+		public function setDeslogin($deslogin) {
+			$this->deslogin = $deslogin;
+		}
+
+
+		public function getDessenha() {
+			return $this->dessenha;
+		}
+
+		public function setDessenha($dessenha) {
+			$this->dessenha = $dessenha;
+		}
+
+
+		public function getDtcadastro() {
+			return $this->dtcadastro;
+		}
+
+		public function setDtcadastro($dtcadastro) {
+			$this->dtcadastro = $dtcadastro;
+		}		
+
+
+		function loadById($id){
+			$sql = new Sql();
+
+			$result = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario = :ID", array (
+				":ID"=>$id
+			));
+
+			if (count($result) > 0) {
+				$row = $result[0];
+				$this->setIdusario($row['idusuario']);
+				$this->setDeslogin($row['deslogin']);
+				$this->setDessenha($row['dessenha']);
+				$this->setDtcadastro(new DateTime($row['dtcadastro']));
 			}
-
 		}
 
-		private function setParam($statement, $key, $value) {
 
-			$statement->bindParam($key,$value);
+		public function __toString() {
 
-		}
-
-		public function query($rawQuery,$params = array()) {
-			$stmt = $this-> conn->prepare($rawQuery);
-
-			$this->setParams($stmt,$params);
-
-			$stmt->execute();
-
-			return $stmt;
-			
-		}
-
-		public function select($rawQuery, $params = array()):array {
-
-			$stmt = $this->query($rawQuery, $params);
-
-			return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+			return json_encode(array(
+				"idusuario"=>$this->getIdusuario(),
+				"deslogin"=>$this->getDeslogin(),
+				"dessenha"=>$this->getDessenha(),
+				"dtcadastro"=>$this->getDtcadastro()->format("d/m/Y H:i:s")
+			));
 		}
 	}
 ?>
