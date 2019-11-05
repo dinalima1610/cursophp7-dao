@@ -52,6 +52,7 @@
 	echo $aluno;
 	*/
 
+	/*
 	//alterando usuários
 	$usuario = new Usuario();
 	$usuario->loadById(8);
@@ -62,5 +63,12 @@
 
 	$usuario->loadById(10);
 	$usuario->update("aluninho","@luninh0");
+	echo $usuario;
+	*/
+
+	//excluindo usuários
+	$usuario = new Usuario();
+	$usuario->loadById(11);
+	$usuario->delete();
 	echo $usuario;
 ?>
