@@ -30,6 +30,37 @@
 
 	echo "<br /><br />";
 
-	$usuario->login("root","123");
+	//$usuario->login("root","123");
+	//echo $usuario;
+
+	// 05/11/19
+	//inserindo novos usuários
+	/*
+	echo "<br /><br />";
+	
+	$aluno = new Usuario();
+	$aluno->setDeslogin("aluninho");
+	$aluno->setDessenha("@luninh0");
+	$aluno->insert();
+	echo $aluno;
+	
+	echo "<br /><br />";
+
+	$aluno = new Usuario();
+	$aluno = new Usuario("aluna","@lun@");
+	$aluno->insert();
+	echo $aluno;
+	*/
+
+	//alterando usuários
+	$usuario = new Usuario();
+	$usuario->loadById(8);
+	$usuario->update("professor","!@#$%¨&*");
+	echo $usuario;
+
+	echo "<br /><br />";
+
+	$usuario->loadById(10);
+	$usuario->update("aluninho","@luninh0");
 	echo $usuario;
 ?>
